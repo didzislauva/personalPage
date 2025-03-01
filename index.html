@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coder Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-family: monospace;
+            overflow: hidden;
+        }
+        .box {
+            background-color: #252525;
+            border: 2px solid #444;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        .navbar {
+            background-color: #333;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+        }
+        .btn-custom {
+            background-color: #444;
+            border: none;
+            color: #fff;
+            padding: 10px 15px;
+        }
+        .btn-custom:hover {
+            background-color: #555;
+        }
+        
+        /* Background Animation */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+   <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">Coder Portfolio</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="hp2.html">Page 2</a></li>
+            <li class="nav-item"><a class="nav-link" href="hp3.html">Page 3</a></li>
+            <li class="nav-item"><a class="nav-link" href="hp4.html">Page 4</a></li>
+        </ul>
+    </div>
+</nav>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box text-center">
+                    <h2>About Me</h2>
+                    <p>A passionate coder who loves building projects and solving problems.</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="box">
+                    <h2>Projects</h2>
+                    <ul>
+                        <li>Project 1 - Phone number color <a href="https://github.com/didzislauva/telNumColor">GitHub Link</a></li>
+                        <li>Project 2 - Video file editor <a href="https://github.com/didzislauva/ffmpeg-gui1984">GitHub Link</a></li>
+                        <li>Project 3 - Audio cassete to video <a href="https://github.com/didzislauva/cassete2video">GitHub Link</a></li>
+						<li>Project 4 - Serial signal simulator <a href="https://github.com/didzislauva/SerialSignalSimulator">GitHub Link</a></li>
+						<li>Project 5 - PEPPOL invoice generator <a href="https://github.com/didzislauva/strukturetieRekini">GitHub Link</a></li>
+						<li>Project 6 - File card demo <a href="https://github.com/didzislauva/fileCards">GitHub Link</a></li>
+						<li>Project 7 - Open Street Map vizualizer<a href="https://github.com/didzislauva/OpenStreetMapPyVisualizer">GitHub Link</a></li>
+						<li>Project 8 - LatLong to Baltic TM93 coord converter <a href="https://github.com/didzislauva/meteoVoronoiLV">GitHub Link</a></li>
+						<li>Project 9 - Filmas.lv m3u8 downloader <a href="https://github.com/didzislauva/filmas.lv.downloader">GitHub Link</a></li>
+						<li>Project 10 - Moodle questions for B category Ham radio in Latvia <a href="https://github.com/didzislauva/moodleHamRadio">GitHub Link</a></li>
+						
+						<p> Feel free to check out my other github projects </p>
+                    </ul>
+                </div>
+				
+				<div class="box text-center">
+					<h2>More Background variations</h2>
+					<a class="btn btn-custom" href="hp2.html">Page 2</a>
+					<a class="btn btn-custom" href="hp3.html">Page 3</a>
+					<a class="btn btn-custom" href="hp4.html">Page 4</a>
+				</div>
+            </div>
+        </div>
+        
+        <div class="box text-center">
+            <h2>Contact</h2>
+            <button class="btn btn-custom" onclick="showEmail()">Show Email</button>
+            <p id="email" style="display:none;">coder@example.com</p>
+        </div>
+    </div>
+    
+    <script>
+        function showEmail() {
+            document.getElementById('email').style.display = 'block';
+        }
+        
+        // Background Animation
+        const canvas = document.getElementById("backgroundCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let lines = [];
+        const numLines = 10;
+        
+        for (let i = 0; i < numLines; i++) {
+            lines.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                length: Math.random() * 300 + 100,
+                speed: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.3 + 0.1,
+                colorShift: Math.random() * 0.1
+            });
+        }
+        
+        function drawLines() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            lines.forEach(line => {
+                let brightness = Math.sin(Date.now() * 0.0005 + line.colorShift) * 30 + 100;
+                ctx.strokeStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${line.opacity})`;
+                
+                ctx.beginPath();
+                ctx.moveTo(line.x, line.y);
+                ctx.lineTo(line.x + line.length, line.y + Math.sin(line.x * 0.01) * 50);
+                ctx.globalAlpha = line.opacity;
+                ctx.stroke();
+                line.x += line.speed;
+                if (line.x > canvas.width) line.x = -line.length;
+            });
+            requestAnimationFrame(drawLines);
+        }
+        
+        function drawGrainEffect() {
+            const grainCanvas = document.createElement('canvas');
+            const grainCtx = grainCanvas.getContext('2d');
+            grainCanvas.width = canvas.width;
+            grainCanvas.height = canvas.height;
+            document.body.appendChild(grainCanvas);
+            grainCanvas.style.position = 'fixed';
+            grainCanvas.style.top = '0';
+            grainCanvas.style.left = '0';
+            grainCanvas.style.width = '100%';
+            grainCanvas.style.height = '100%';
+            grainCanvas.style.zIndex = '0';
+            grainCanvas.style.filter = 'blur(5px)'; // Initial blur
+            
+            let blurSize = 5;
+            let blurDirection = 1;
+            
+            let imageData = grainCtx.createImageData(grainCanvas.width, grainCanvas.height);
+            let pixels = imageData.data;
+            let movement = new Array(pixels.length / 4).fill().map(() => ({
+                dx: (Math.random() - 0.5) * 0.05,
+                dy: (Math.random() - 0.5) * 0.05
+            }));
+            
+            for (let i = 0; i < pixels.length; i += 4) {
+                let value = Math.random() * 255;
+                pixels[i] = pixels[i + 1] = pixels[i + 2] = value;
+                pixels[i + 3] = Math.random() * 50; // Adjust opacity for subtle effect
+            }
+            grainCtx.putImageData(imageData, 0, 0);
+            
+            function animateGrain() {
+                let newImageData = grainCtx.getImageData(0, 0, grainCanvas.width, grainCanvas.height);
+                let newPixels = newImageData.data;
+                for (let i = 0; i < newPixels.length; i += 4) {
+                    let index = i / 4;
+                    let x = (index % grainCanvas.width) + movement[index].dx;
+                    let y = Math.floor(index / grainCanvas.width) + movement[index].dy;
+                    let newIndex = (Math.floor(y) * grainCanvas.width + Math.floor(x)) * 4;
+                    
+                    if (newIndex >= 0 && newIndex < newPixels.length) {
+                        newPixels[newIndex] = pixels[i];
+                        newPixels[newIndex + 1] = pixels[i + 1];
+                        newPixels[newIndex + 2] = pixels[i + 2];
+                        newPixels[newIndex + 3] = pixels[i + 3];
+                    }
+                }
+                grainCtx.putImageData(newImageData, 0, 0);
+                
+                // Modify blur dynamically
+                blurSize += blurDirection * 0.1;
+                if (blurSize > 8 || blurSize < 2) {
+                    blurDirection *= -1;
+                }
+                grainCanvas.style.filter = `blur(${blurSize}px)`;
+                
+                requestAnimationFrame(animateGrain);
+            }
+            animateGrain();
+        }
+        
+		
+		        function drawGrainEffect2() {
+            const grainCanvas = document.createElement('canvas');
+            const grainCtx = grainCanvas.getContext('2d');
+            grainCanvas.width = canvas.width;
+            grainCanvas.height = canvas.height;
+            document.body.appendChild(grainCanvas);
+            grainCanvas.style.position = 'fixed';
+            grainCanvas.style.top = '0';
+            grainCanvas.style.left = '0';
+            grainCanvas.style.width = '100%';
+            grainCanvas.style.height = '100%';
+            grainCanvas.style.zIndex = '0';
+            
+            const numGrains = 2000;
+            const grains = [];
+            const centerX = grainCanvas.width / 2;
+            const centerY = grainCanvas.height / 2;
+            
+            for (let i = 0; i < numGrains; i++) {
+                let angle = Math.random() * Math.PI * 2;
+                let radius = Math.random() * Math.min(centerX, centerY);
+                grains.push({
+                    x: centerX + Math.cos(angle) * radius,
+                    y: centerY + Math.sin(angle) * radius,
+                    brightness: Math.random() * 255,
+                    speed: Math.random() * 0.5 + 0.5,
+                    direction: Math.random() * Math.PI * 2,
+                });
+            }
+            
+            function animateGrain2() {
+                grainCtx.clearRect(0, 0, grainCanvas.width, grainCanvas.height);
+                
+                grains.forEach(grain => {
+                    let dx = grain.x - centerX;
+                    let dy = grain.y - centerY;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let speedFactor = Math.max(0.2, 1 - distance / Math.max(centerX, centerY));
+                    
+                    grain.direction += (Math.random() - 0.5) * 0.02; // Slow direction change
+                    grain.speed = speedFactor * (Math.random() * 0.2 + 0.2); // Adjust speed based on distance
+                    
+                    grain.x += Math.cos(grain.direction) * grain.speed;
+                    grain.y += Math.sin(grain.direction) * grain.speed;
+                    
+                    // Brightness changes gradually
+                    grain.brightness += (Math.random() - 0.5) * 2;
+                    grain.brightness = Math.max(50, Math.min(200, grain.brightness));
+                    
+                    grainCtx.fillStyle = `rgb(${grain.brightness}, ${grain.brightness}, ${grain.brightness})`;
+                    grainCtx.fillRect(grain.x, grain.y, 2, 2);
+                });
+                
+                requestAnimationFrame(animateGrain2);
+            }
+            
+            animateGrain2();
+        }
+		
+
+        
+        drawLines();
+        // drawGrainEffect();
+		drawGrainEffect2();
+    </script>
+</body>
+</html>
